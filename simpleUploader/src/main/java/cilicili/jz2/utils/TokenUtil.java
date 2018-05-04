@@ -70,7 +70,7 @@ public class TokenUtil {
 		return token;
 	}
 	
-	public static Token createToken(Integer userId, String tokenUssage, int maxCountAuth, Period validPeriod) {
+	public static Token createToken(Integer userId, String tokenUssage, Integer maxCountAuth, Period validPeriod) {
 		Token token = new Token();
 		token.setUserId(userId);
 		token.setToken(RandomUtil.getRandomToken(userId));

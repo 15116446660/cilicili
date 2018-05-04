@@ -37,6 +37,7 @@ public class LoginControllerImpl extends baseController implements ILoginControl
 		if (user == null) {
 			result.put("msg", "用户名或密码错误");
 		} else {
+			TokenUtil.destoryOldTokens(user.getId());
 			Token newToken = TokenUtil.createToken(user.getId(), TokenUtil.TokenUssage.DEFAULT, TokenUtil.DEFAULT_MAX_COUNT_AUTH, Period.of(0, 1, 0));
 			result.put("status", "success");
 			result.put("token", newToken.getToken());
