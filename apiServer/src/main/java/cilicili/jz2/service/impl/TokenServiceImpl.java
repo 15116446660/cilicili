@@ -12,12 +12,12 @@ import java.util.List;
 @Service ("tokenService")
 public class TokenServiceImpl implements ITokenService {
 	private final TokenMapper tokenMapper;
-	
+
 	@Autowired
 	public TokenServiceImpl(TokenMapper tokenMapper) {
 		this.tokenMapper = tokenMapper;
 	}
-	
+
 	@Override
 	public Token findToken(String token) {
 		TokenExample tokenExample = new TokenExample();
@@ -30,14 +30,22 @@ public class TokenServiceImpl implements ITokenService {
 			return tokenList.get(0);
 		}
 	}
-	
+
 	@Override
 	public void addToken(Token token) {
 		tokenMapper.insert(token);
 	}
-	
+
 	@Override
 	public void updateToken(Token token) {
 		tokenMapper.updateByPrimaryKeySelective(token);
+	}
+
+	@Override
+	public void deleteTokens(Integer userId) {
+		TokenExample tokenExample = new TokenExample();
+		TokenExample.Criteria criteria = tokenExample.createCriteria();
+		criteria.andUserIdEqualTo(userId);
+		tokenMapper.deleteByExample(tokenExample);
 	}
 }
