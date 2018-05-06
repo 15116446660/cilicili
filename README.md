@@ -144,7 +144,7 @@ public class BaseUtil {
   </bean>
 ```
 
-在 simpleUploader 下执行:
+在 simpleUploader/ 下执行:
 ```
 rm -rf target
 mvn install
@@ -326,5 +326,3 @@ public static void destoryOldTokens(Integer userId) {...}
     2.2 接入 OAuth 登录授权
 
     2.3 数据库拆分，数据库分布式部署
-
-
