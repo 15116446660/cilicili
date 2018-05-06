@@ -1,7 +1,6 @@
 package cilicili.jz2.controller.impl;
 
 import cilicili.jz2.controller.IUserController;
-import cilicili.jz2.controller.baseController;
 import cilicili.jz2.pojo.Token;
 import cilicili.jz2.pojo.User;
 import cilicili.jz2.service.impl.UserServiceImpl;
@@ -16,11 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 @RequestMapping ("/user")
-public class UserControllerImpl extends baseController implements IUserController {
+public class UserControllerImpl implements IUserController {
 	private final UserServiceImpl userService;
 	
 	@Autowired
@@ -32,6 +32,7 @@ public class UserControllerImpl extends baseController implements IUserControlle
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> findUserById(Integer id, String token) {
+		Map<String, Serializable> result = new HashMap<>();
 		result.put("status", "failure");
 		try {
 			Token tokenCheck = TokenUtil.checkToken(token, TokenUtil.TokenUssage.DEFAULT);
@@ -54,6 +55,7 @@ public class UserControllerImpl extends baseController implements IUserControlle
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> findUserByUsername(String username, String token) {
+		Map<String, Serializable> result = new HashMap<>();
 		result.put("status", "failure");
 		try {
 			Token tokenCheck = TokenUtil.checkToken(token, TokenUtil.TokenUssage.DEFAULT);
@@ -76,6 +78,7 @@ public class UserControllerImpl extends baseController implements IUserControlle
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> addUser(User user) {
+		Map<String, Serializable> result = new HashMap<>();
 		result.put("status", "failure");
 		do {
 			if (user.getUsername() == null) {
@@ -108,6 +111,7 @@ public class UserControllerImpl extends baseController implements IUserControlle
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> updateUser(User user, String token, String apply) {
+		Map<String, Serializable> result = new HashMap<>();
 		result.put("status", "failure");
 		try {
 			do {
@@ -153,7 +157,7 @@ public class UserControllerImpl extends baseController implements IUserControlle
 	@ResponseBody
 	@ExceptionHandler ({Exception.class})
 	public Map<String, Serializable> exceptionHandle(Exception e) {
-		result.clear();
+		Map<String, Serializable> result = new HashMap<>();
 		result.put("status", "failure");
 		result.put("msg", "参数错误");
 		Logger logger = LoggerFactory.getLogger(this.getClass());

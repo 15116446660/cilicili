@@ -1,7 +1,6 @@
 package cilicili.jz2.controller.impl;
 
 import cilicili.jz2.controller.ILoginController;
-import cilicili.jz2.controller.baseController;
 import cilicili.jz2.pojo.Token;
 import cilicili.jz2.pojo.User;
 import cilicili.jz2.service.impl.UserServiceImpl;
@@ -17,10 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.Serializable;
 import java.time.Period;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-public class LoginControllerImpl extends baseController implements ILoginController {
+public class LoginControllerImpl implements ILoginController {
 	private final UserServiceImpl userService;
 	
 	@Autowired
@@ -32,6 +32,7 @@ public class LoginControllerImpl extends baseController implements ILoginControl
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> login(String username, String password) {
+		Map<String, Serializable> result = new HashMap<>();
 		User user = userService.findUserByUsernamePassword(username, password);
 		result.put("status", "failure");
 		if (user == null) {
@@ -49,6 +50,7 @@ public class LoginControllerImpl extends baseController implements ILoginControl
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> logout(String token) {
+		Map<String, Serializable> result = new HashMap<>();
 		TokenUtil.destoryToken(token);
 		result.put("status", "success");
 		return result;
@@ -58,6 +60,7 @@ public class LoginControllerImpl extends baseController implements ILoginControl
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> now(String token) {
+		Map<String, Serializable> result = new HashMap<>();
 		result.put("status", false);
 		try {
 			Token tokenCheck = TokenUtil.checkToken(token, TokenUtil.TokenUssage.DEFAULT);
@@ -78,6 +81,7 @@ public class LoginControllerImpl extends baseController implements ILoginControl
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> apply(String token, String ussage) {
+		Map<String, Serializable> result = new HashMap<>();
 		result.put("status", "failure");
 		User user;
 		try {
@@ -103,7 +107,7 @@ public class LoginControllerImpl extends baseController implements ILoginControl
 	@ResponseBody
 	@ExceptionHandler ({Exception.class})
 	public Map<String, Serializable> exceptionHandle(Exception e) {
-		result.clear();
+		Map<String, Serializable> result = new HashMap<>();
 		result.put("status", "failure");
 		result.put("msg", "参数错误");
 		Logger logger = LoggerFactory.getLogger(this.getClass());

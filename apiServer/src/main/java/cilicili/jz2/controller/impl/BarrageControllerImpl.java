@@ -1,7 +1,6 @@
 package cilicili.jz2.controller.impl;
 
 import cilicili.jz2.controller.IBarrageController;
-import cilicili.jz2.controller.baseController;
 import cilicili.jz2.pojo.Barrage;
 import cilicili.jz2.pojo.Token;
 import cilicili.jz2.pojo.User;
@@ -10,8 +9,6 @@ import cilicili.jz2.service.impl.BarrageServiceImpl;
 import cilicili.jz2.service.impl.UserServiceImpl;
 import cilicili.jz2.service.impl.VideoServiceImpl;
 import cilicili.jz2.utils.TokenUtil;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 @RequestMapping ("/barrage")
-public class BarrageControllerImpl extends baseController implements IBarrageController {
+public class BarrageControllerImpl implements IBarrageController {
 	private final BarrageServiceImpl barrageService;
 	private final UserServiceImpl userService;
 	private final VideoServiceImpl videoService;
@@ -44,6 +42,7 @@ public class BarrageControllerImpl extends baseController implements IBarrageCon
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> showBarrages(@RequestParam ("id") Integer videoId) {
+		Map<String, Serializable> result = new HashMap<>();
 		ArrayList<Barrage> barrages = (ArrayList<Barrage>) barrageService.showBarrages(videoId);
 		result.put("barrages", barrages);
 		return result;
@@ -53,6 +52,7 @@ public class BarrageControllerImpl extends baseController implements IBarrageCon
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> addBarrage(Barrage barrage, String token) {
+		Map<String, Serializable> result = new HashMap<>();
 		result.put("status", "failure");
 		try {
 			do {
@@ -110,7 +110,7 @@ public class BarrageControllerImpl extends baseController implements IBarrageCon
 	@ResponseBody
 	@ExceptionHandler ({Exception.class})
 	public Map<String, Serializable> exceptionHandle(Exception e) {
-		result.clear();
+		Map<String, Serializable> result = new HashMap<>();
 		result.put("status", "failure");
 		result.put("msg", "参数错误");
 		Logger logger = LoggerFactory.getLogger(this.getClass());

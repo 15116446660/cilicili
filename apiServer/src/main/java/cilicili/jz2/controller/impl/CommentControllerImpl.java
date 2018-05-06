@@ -1,7 +1,6 @@
 package cilicili.jz2.controller.impl;
 
 import cilicili.jz2.controller.ICommentController;
-import cilicili.jz2.controller.baseController;
 import cilicili.jz2.pojo.Comment;
 import cilicili.jz2.pojo.Token;
 import cilicili.jz2.pojo.User;
@@ -24,11 +23,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 @RequestMapping ("/comment")
-public class CommentControllerImpl extends baseController implements ICommentController {
+public class CommentControllerImpl implements ICommentController {
 	private final CommentServiceImpl commentService;
 	private final UserServiceImpl userService;
 	private final VideoServiceImpl videoService;
@@ -44,6 +44,7 @@ public class CommentControllerImpl extends baseController implements ICommentCon
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> showComments(@RequestParam ("id") Integer videoId, Integer offset) {
+		Map<String, Serializable> result = new HashMap<>();
 		if (offset == null) {
 			offset = 0;
 		}
@@ -58,6 +59,7 @@ public class CommentControllerImpl extends baseController implements ICommentCon
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> addComment(Comment comment, String token) {
+		Map<String, Serializable> result = new HashMap<>();
 		result.put("status", "failure");
 		try {
 			do {
@@ -105,6 +107,7 @@ public class CommentControllerImpl extends baseController implements ICommentCon
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> deleteComment(Integer id, String token) {
+		Map<String, Serializable> result = new HashMap<>();
 		result.put("status", "failure");
 		try {
 			Token tokenCheck = TokenUtil.checkToken(token, TokenUtil.TokenUssage.DEFAULT);
@@ -136,6 +139,7 @@ public class CommentControllerImpl extends baseController implements ICommentCon
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> likeComment(Integer id) {
+		Map<String, Serializable> result = new HashMap<>();
 		Comment comment = commentService.findCommentById(id);
 		try {
 			comment.setCountLike(comment.getCountLike() + 1);
@@ -152,7 +156,7 @@ public class CommentControllerImpl extends baseController implements ICommentCon
 	@ResponseBody
 	@ExceptionHandler ({Exception.class})
 	public Map<String, Serializable> exceptionHandle(Exception e) {
-		result.clear();
+		Map<String, Serializable> result = new HashMap<>();
 		result.put("status", "failure");
 		result.put("msg", "参数错误");
 		Logger logger = LoggerFactory.getLogger(this.getClass());

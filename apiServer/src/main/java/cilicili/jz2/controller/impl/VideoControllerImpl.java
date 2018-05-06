@@ -1,7 +1,6 @@
 package cilicili.jz2.controller.impl;
 
 import cilicili.jz2.controller.IVideoController;
-import cilicili.jz2.controller.baseController;
 import cilicili.jz2.pojo.Token;
 import cilicili.jz2.pojo.User;
 import cilicili.jz2.pojo.Video;
@@ -21,11 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 @RequestMapping ("/video")
-public class VideoControllerImpl extends baseController implements IVideoController {
+public class VideoControllerImpl implements IVideoController {
 	private final UserServiceImpl userService;
 	private final VideoServiceImpl videoService;
 	
@@ -39,6 +39,7 @@ public class VideoControllerImpl extends baseController implements IVideoControl
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> findVideoById(Integer id) {
+		Map<String, Serializable> result = new HashMap<>();
 		Video video = videoService.findVideoById(id);
 		if (video == null) {
 			result.put("status", "failure");
@@ -54,6 +55,7 @@ public class VideoControllerImpl extends baseController implements IVideoControl
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> addVideo(Video video, String token) {
+		Map<String, Serializable> result = new HashMap<>();
 		result.put("status", "failure");
 		try {
 			do {
@@ -110,6 +112,7 @@ public class VideoControllerImpl extends baseController implements IVideoControl
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> playVideo(Integer id) {
+		Map<String, Serializable> result = new HashMap<>();
 		Video video = videoService.findVideoById(id);
 		try {
 			video.setCountPlay(video.getCountPlay() + 1);
@@ -127,6 +130,7 @@ public class VideoControllerImpl extends baseController implements IVideoControl
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> likeVideo(Integer id) {
+		Map<String, Serializable> result = new HashMap<>();
 		Video video = videoService.findVideoById(id);
 		try {
 			video.setCountLike(video.getCountLike() + 1);
@@ -144,6 +148,7 @@ public class VideoControllerImpl extends baseController implements IVideoControl
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> showVideos(Integer offset) {
+		Map<String, Serializable> result = new HashMap<>();
 		if (offset == null) {
 			offset = 0;
 		}
@@ -158,6 +163,7 @@ public class VideoControllerImpl extends baseController implements IVideoControl
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> findVideos(Integer offset, String q) {
+		Map<String, Serializable> result = new HashMap<>();
 		if (offset == null) {
 			offset = 0;
 		}
@@ -171,7 +177,7 @@ public class VideoControllerImpl extends baseController implements IVideoControl
 	@ResponseBody
 	@ExceptionHandler ({Exception.class})
 	public Map<String, Serializable> exceptionHandle(Exception e) {
-		result.clear();
+		Map<String, Serializable> result = new HashMap<>();
 		result.put("status", "failure");
 		result.put("msg", "参数错误");
 		Logger logger = LoggerFactory.getLogger(this.getClass());

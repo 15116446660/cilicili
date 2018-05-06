@@ -95,8 +95,9 @@ db.password={数据库密码}
 
 在 apiServer/ 下执行:
 ```
-chmod +x ./start.sh
-./start.sh
+rm -rf target
+mvn install
+mvn jetty:run
 ```
 
 ### 4.3 simpleUploader
@@ -145,8 +146,9 @@ public class BaseUtil {
 
 在 simpleUploader 下执行:
 ```
-chmod +x ./start.sh
-./start.sh
+rm -rf target
+mvn install
+mvn jetty:run
 ```
 
 ### 4.4 storage_server

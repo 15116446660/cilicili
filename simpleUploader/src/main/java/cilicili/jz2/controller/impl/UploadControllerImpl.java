@@ -1,7 +1,6 @@
 package cilicili.jz2.controller.impl;
 
 import cilicili.jz2.controller.IUploadController;
-import cilicili.jz2.controller.baseController;
 import cilicili.jz2.pojo.Token;
 import cilicili.jz2.utils.BaseUtil;
 import cilicili.jz2.utils.RandomUtil;
@@ -15,18 +14,20 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-public class UploadControllerImpl extends baseController implements IUploadController {
+public class UploadControllerImpl implements IUploadController {
 	@RequestMapping (value = "/upload/{token}", method = RequestMethod.POST)
 	@ResponseBody
 	@Override
 	public Map<String, Serializable> upload(MultipartFile file, @PathVariable ("token") String token) {
+		Map<String, Serializable> result = new HashMap<>();
 		do {
 			result.put("status", "failure");
 			try {
-				Token tokenCheck = TokenUtil.checkToken(token, TokenUtil.TokenUssage.UPLOAD_FILE);
+				TokenUtil.checkToken(token, TokenUtil.TokenUssage.UPLOAD_FILE);
 			} catch (TokenUtil.TokenExpired | TokenUtil.TokenNotFound | TokenUtil.TokenOverAuthed | TokenUtil.TokenUssageNotMatched tokenError) {
 				result.put("msg", tokenError.getMessage());
 				break;
@@ -74,7 +75,7 @@ public class UploadControllerImpl extends baseController implements IUploadContr
 	@ResponseBody
 	@ExceptionHandler ({Exception.class})
 	public Map<String, Serializable> exceptionHandle(Exception e) {
-		result.clear();
+		Map<String, Serializable> result = new HashMap<>();
 		result.put("status", "failure");
 		result.put("msg", "未登录或参数错误");
 		Logger logger = LoggerFactory.getLogger(this.getClass());
