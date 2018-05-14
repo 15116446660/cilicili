@@ -90,7 +90,6 @@ public class LoginControllerImpl implements ILoginController {
 			if (user == null) {
 				throw new TokenUtil.TokenNotFound("用户不存在");
 			}
-			result.put("status", true);
 			if (ussage.equals(TokenUtil.TokenUssage.UPLOAD_FILE) || ussage.equals(TokenUtil.TokenUssage.UPDATE_VIDEO_INFO) || ussage.equals(TokenUtil.TokenUssage.MODIFY_USER_SETTINGS)) {
 				Token newToken = TokenUtil.createToken(user.getId(), ussage, 1, Period.of(0, 0, 1));
 				result.put("status", "success");

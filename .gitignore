@@ -1,6 +1,8 @@
 .idea
 *.iml
+*.log
 node_modules
 db.properties
 target
-*.log
+.mvn
+mvnw*

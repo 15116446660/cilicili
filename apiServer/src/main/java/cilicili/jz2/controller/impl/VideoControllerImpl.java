@@ -78,10 +78,6 @@ public class VideoControllerImpl implements IVideoController {
 					result.put("msg", "视频地址为空或超过100长度限制");
 					break;
 				}
-				if (video.getUploadUserid() == null) {
-					result.put("msg", "上传用户id为空");
-					break;
-				}
 				if (video.getPicUrl() == null) {
 					result.put("msg", "视频封面地址为空");
 					break;
@@ -89,6 +85,7 @@ public class VideoControllerImpl implements IVideoController {
 					result.put("msg", "视频封面地址为空或超过100长度限制");
 					break;
 				}
+				video.setUploadUserid(user.getId());
 				video.setId(null);
 				video.setUploadTime(ZonedDateTime.now());
 				video.setCountPlay(0);

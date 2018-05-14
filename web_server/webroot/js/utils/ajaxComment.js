@@ -9,11 +9,11 @@ const ajaxComment = {
         json = response;
       });
     return json;
-  }, add({content, userId, videoId}) {
+  }, add({content, videoId}) {
     let json = {};
     $.post(
       API_SERVER_padEnd("comment/add"), {
-        content, userId, videoId, token: utils.getCookie("token")
+        content, videoId, token: utils.getCookie("token")
       }, response => {
         json = response;
       });

@@ -9,11 +9,11 @@ const ajaxBarrage = {
         json = response;
       });
     return json;
-  }, add({content, userId, videoId, color, offtime, position}) {
+  }, add({content, videoId, color, offtime, position}) {
     let json = {};
     $.post(
       API_SERVER_padEnd("barrage/add"), {
-        content, userId, videoId, color, offtime, position, token: utils.getCookie("token")
+        content, videoId, color, offtime, position, token: utils.getCookie("token")
       }, response => {
         json = response;
       });

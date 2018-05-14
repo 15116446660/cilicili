@@ -1,5 +1,9 @@
 # cilicili | 简单视频分享
 
+## 0. 接口文档
+
+查看 ***/docs/api.md***
+
 ## 1. 介绍
 
 cilicili 是一个支持用户上传视频、观看视频、搜索视频、发送评论、发送弹幕的视频分享网站。
@@ -318,6 +322,8 @@ public static void destoryOldTokens(Integer userId) {...}
     1.4 网站管理，包括全部的用户信息、视频信息、评论、弹幕管理
 
     1.5 基于视频播放量的热度榜
+    
+    1.6 取消点赞
 
 2. 架构
 
@@ -326,3 +332,5 @@ public static void destoryOldTokens(Integer userId) {...}
     2.2 接入 OAuth 登录授权
 
     2.3 数据库拆分，数据库分布式部署
+    
+    2.4 将后台全部更换成 SpringBoot

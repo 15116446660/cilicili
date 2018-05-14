@@ -9,11 +9,11 @@ const ajaxVideo = {
         json = response;
       });
     return json;
-  }, add({title, url, uploadUserid, picUrl, description}) {
+  }, add({title, url, picUrl, description}) {
     let json = {};
     $.post(
       API_SERVER_padEnd("video/add"), {
-        title, url, uploadUserid, picUrl, description, token: utils.getCookie("token")
+        title, url, picUrl, description, token: utils.getCookie("token")
       }, response => {
         json = response;
       });

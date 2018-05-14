@@ -60,8 +60,6 @@ public class BarrageControllerImpl implements IBarrageController {
 				User user = userService.findUserById(tokenCheck.getUserId());
 				if (user == null) {
 					throw new TokenUtil.TokenNotFound("用户不存在");
-				} else if (!user.getId().equals(barrage.getUserId())) {
-					throw new TokenUtil.TokenNotFound("非本人操作，拒绝授权");
 				}
 				if (barrage.getVideoId() == null) {
 					result.put("msg", "视频 id 为空");
@@ -92,6 +90,7 @@ public class BarrageControllerImpl implements IBarrageController {
 					barrage.setPosition(Byte.valueOf("0"));
 					break;
 				}
+				barrage.setUserId(user.getId());
 				barrage.setId(null);
 				barrage.setSendtime(ZonedDateTime.now());
 				try {

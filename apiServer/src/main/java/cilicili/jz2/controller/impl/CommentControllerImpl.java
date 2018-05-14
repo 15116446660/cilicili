@@ -67,8 +67,6 @@ public class CommentControllerImpl implements ICommentController {
 				User user = userService.findUserById(tokenCheck.getUserId());
 				if (user == null) {
 					throw new TokenUtil.TokenNotFound("用户不存在");
-				} else if (!user.getId().equals(comment.getUserId())) {
-					throw new TokenUtil.TokenNotFound("非本人操作，拒绝授权");
 				}
 				if (comment.getVideoId() == null) {
 					result.put("msg", "视频 id 为空");
@@ -87,6 +85,7 @@ public class CommentControllerImpl implements ICommentController {
 					result.put("msg", "评论内容为空或超过250长度限制");
 					break;
 				}
+				comment.setUserId(user.getId());
 				comment.setId(null);
 				comment.setSendtime(ZonedDateTime.now());
 				comment.setCountLike(0);

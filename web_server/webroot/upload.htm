@@ -231,7 +231,6 @@
           this.videofile.url = url;
         }
         let video = {};
-        this.videofile.uploadUserid = LOGIN_STATUS.user.id;
         ({status, msg, video} = ajaxVideo.add(this.videofile));
         if (status === undefined || status === "failure") {
           msg = msg || '网络连接异常';
